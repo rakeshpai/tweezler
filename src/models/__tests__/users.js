@@ -1,7 +1,9 @@
 const { open, close, dropDB } = require('../mongoose/_connection');
 const {
-  createUser, userByUsername, authenticate, updateProfileDetails, getProfileDetails,
-  updateCount,
+
+  createUser, userByUsername, authenticate,
+  createComment, getCommentsForTweets,
+  postTweet, checkPostedTweet,
 } = require('../users');
 
 beforeAll(open);
@@ -55,4 +57,21 @@ it('Should Update count', async () => {
   const updated = await getProfileDetails('myNewTweezlerUserId');
 
   expect(updated.username).toEqual('myNewTweezlerUserId');
+it('should post tweet success', async () => {
+  const tweetId = await postTweet('myNewTweezlerUserId', 'my first tweet');
+  const tweetCheck = await checkPostedTweet(Number(tweetId));
+  expect(tweetCheck).toEqual('my first tweet');
+});
+
+it('should create comment for a tweet', async () => {
+  const sample = {
+    followerId: 'myNewTweezlerUserId',
+    tweetId: 1,
+    comment: 'Hello',
+  };
+  const createComments = await createComment(sample.followerId, sample.tweetId, sample.comment);
+  expect(createComments.tweetId).toEqual(1);
+
+  const comments = await getCommentsForTweets(sample.tweetId);
+  expect(comments[0].tweetId).toEqual(sample.tweetId);
 });
