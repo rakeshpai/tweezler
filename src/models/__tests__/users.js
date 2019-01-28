@@ -28,6 +28,7 @@ it('Should update profile details', async () => {
   const updateValues = {
     username: 'myNewTweezlerUserId',
     name: 'teezle',
+    email: 'myteezle@gmail.com',
   };
   await updateProfileDetails(updateValues);
 
