@@ -5,9 +5,11 @@ const saltRounds = 10;
 
 const encrypt = password => hash(password, saltRounds);
 
-const createUser = async (username, password) => User.create({
+const createUser = async (username, password, email, name) => User.create({
   username,
   password: await encrypt(password),
+  email,
+  name,
 });
 
 const userByUsername = async username => User.findOne({ username });
@@ -22,7 +24,10 @@ const updateProfileDetails = async (username, name) => User.update({ username },
   $set: { name },
 });
 
-const getProfileDetails = async username => User.findOne({ username });
+const getProfileDetails = async username => User.findOne({ username },
+  {
+    _id: 0, __v: 0, password: 0,
+  });
 
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;

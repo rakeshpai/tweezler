@@ -7,7 +7,7 @@ beforeAll(open);
 afterAll(() => dropDB().then(close));
 
 it('should create a user', async () => {
-  await createUser('myNewTweezlerUserId', 'password');
+  await createUser('myNewTweezlerUserId', 'password', 'myteezle@gmail.com', 'Tweezler');
 
   const createdUser = await userByUsername('myNewTweezlerUserId');
   expect(createdUser.username).toEqual('myNewTweezlerUserId');
@@ -32,5 +32,14 @@ it('Should update profile details', async () => {
 });
 
 it('Should get profile details', async () => {
-  await getProfileDetails('myNewTweezlerUserId');
+  const getProfileData = await getProfileDetails('myNewTweezlerUserId');
+
+  const result = {
+    name: 'teezle',
+    email: 'myteezle@gmail.com',
+    username: 'myNewTweezlerUserId',
+    followers: [],
+    following: [],
+  };
+  expect(getProfileData.toJSON()).toEqual(result);
 });
