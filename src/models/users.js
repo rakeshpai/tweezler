@@ -1,10 +1,19 @@
 const { hash, compare } = require('bcrypt');
 const User = require('./mongoose/users');
 const Tweets = require('./mongoose/tweets');
+const Comment = require('./mongoose/comments');
 
 const saltRounds = 10;
 
 const encrypt = password => hash(password, saltRounds);
+
+
+const userIdCheck = (userName, followingName) => (!!(userName && followingName));
+
+const createFollowing = async (userName, followingName) => {
+  const user = userIdCheck(userName, followingName);
+  console.log(user);
+};
 
 
 const createUser = async (username, password) => User.create({
@@ -30,7 +39,7 @@ const postTweet = async (username, tweetMsg) => {
   const saveTweet = tweetId ? await Tweets.create({
     username,
     id: tweetId,
-    message: tweetMsg,
+    tweet: tweetMsg,
     time: new Date(),
   }) : null;
   return saveTweet ? tweetId : null;
@@ -38,11 +47,20 @@ const postTweet = async (username, tweetMsg) => {
 
 const checkPostedTweet = async (id) => {
   const tweet = await Tweets.findOne({ id });
-  return tweet.message;
+  return tweet.tweet;
 };
 
+const createComment = async (followerId, tweetId, comment) => Comment.create({
+  followerId,
+  tweetId,
+  comment,
+  time: new Date(),
+});
+
+module.exports.createComment = createComment;
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
 module.exports.postTweet = postTweet;
 module.exports.checkPostedTweet = checkPostedTweet;
+module.exports.createFollowing = createFollowing;
