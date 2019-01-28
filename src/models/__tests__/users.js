@@ -1,7 +1,10 @@
 const { open, close, dropDB } = require('../mongoose/_connection');
 const {
-  createUser, userByUsername, authenticate, createComment, getCommentsForTweets,
+  createUser, userByUsername, authenticate,
 } = require('../users');
+
+
+const { createComment, getCommentsForTweets } = require('../comments');
 
 beforeAll(open);
 afterAll(() => dropDB().then(close));
@@ -30,7 +33,7 @@ it('should create comment for a tweet', async () => {
     tweetId: 1,
     comment: 'Hello',
   };
-  const createComments = await createComment(sample.followerId, sample.tweetId, sample.comment);
+  const createComments = await createComment(sample);
   expect(createComments.tweetId).toEqual(1);
 
   const comments = await getCommentsForTweets(sample.tweetId);
