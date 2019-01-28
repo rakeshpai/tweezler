@@ -24,7 +24,7 @@ const createComment = async (followerId, tweetId, comment) => Comment.create({
   followerId,
   tweetId,
   comment,
-  commentTime: new Date(),
+  time: new Date(),
 });
 
 module.exports.createComment = createComment;
