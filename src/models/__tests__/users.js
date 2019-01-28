@@ -1,13 +1,14 @@
 const { open, close, dropDB } = require('../mongoose/_connection');
 const {
   createUser, userByUsername, authenticate, updateProfileDetails, getProfileDetails,
+  updateCount,
 } = require('../users');
 
 beforeAll(open);
 afterAll(() => dropDB().then(close));
 
 it('should create a user', async () => {
-  await createUser('myNewTweezlerUserId', 'password', 'myteezle@gmail.com', 'Tweezler');
+  await createUser('myNewTweezlerUserId', 'password', 'myteezle@gmail.com', 'Tweezler', 0, 0, 0);
 
   const createdUser = await userByUsername('myNewTweezlerUserId');
   expect(createdUser.username).toEqual('myNewTweezlerUserId');
@@ -42,8 +43,15 @@ it('Should get profile details', async () => {
     name: 'teezle',
     email: 'myteezle@gmail.com',
     username: 'myNewTweezlerUserId',
-    followers: [],
-    following: [],
   };
   expect(getProfileData.toJSON()).toEqual(result);
+});
+
+
+it('Should Update count', async () => {
+  await updateCount('myNewTweezlerUserId', 'tweetCount');
+
+  const updated = await getProfileDetails('myNewTweezlerUserId');
+
+  expect(updated.username).toEqual('myNewTweezlerUserId');
 });
