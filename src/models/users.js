@@ -7,20 +7,10 @@ const saltRounds = 10;
 
 const encrypt = password => hash(password, saltRounds);
 
-
-// const userIdCheck = (userName, followingName) => (!!(userName && followingName));
-
-// const createFollowing = async (userName, followingName) => {
-//   const user = userIdCheck(userName, followingName);
-//   console.log(user);
-// };
-
-
 const createUser = async (username, password) => User.create({
   username,
   password: await encrypt(password),
 });
-
 
 const userByUsername = async username => User.findOne({ username });
 
@@ -34,21 +24,18 @@ const generateTweetId = async () => {
   return lastTweet.length > 0 ? lastTweet.tweetId + 1 : 1;
 };
 
-const postTweet = async (username, tweetMsg) => {
+const postTweet = async (username, tweet) => {
   const validUser = await userByUsername(username);
-  const tweetId = validUser ? await generateTweetId() : null;
-  const saveTweet = tweetId ? await Tweets.create({
-    username,
-    id: tweetId,
-    tweet: tweetMsg,
-    time: new Date(),
+  const id = validUser ? await generateTweetId() : null;
+  const saveTweet = id ? await Tweets.create({
+    username, id, tweet, time: new Date(),
   }) : null;
   return saveTweet ? tweetId : null;
 };
 
 const checkPostedTweet = async (id) => {
-  const tweet = await Tweets.findOne({ id });
-  return tweet.tweet;
+  const { tweet } = await Tweets.findOne({ id });
+  return tweet;
 };
 
 const createComment = async (followerId, tweetId, comment) => Comment.create({
