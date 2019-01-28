@@ -5,6 +5,15 @@ const saltRounds = 10;
 
 const encrypt = password => hash(password, saltRounds);
 
+
+const userIdCheck = (userName, followingName) => (!!(userName && followingName));
+
+const createFollowing = async (userName, followingName) => {
+  const user = userIdCheck(userName, followingName);
+  console.log(user);
+};
+
+
 const createUser = async (username, password) => User.create({
   username,
   password: await encrypt(password),
@@ -20,3 +29,4 @@ const authenticate = async (username, password) => {
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
+module.exports.createFollowing = createFollowing;
