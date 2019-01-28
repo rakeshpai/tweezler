@@ -30,7 +30,7 @@ const postTweet = async (username, tweet) => {
   const saveTweet = id ? await Tweets.create({
     username, id, tweet, time: new Date(),
   }) : null;
-  return saveTweet ? tweetId : null;
+  return saveTweet ? id : null;
 };
 
 const checkPostedTweet = async (id) => {
