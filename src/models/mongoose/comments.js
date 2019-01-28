@@ -4,7 +4,7 @@ const Comment = new Schema({
   followerId: String,
   tweetId: Number,
   comment: String,
-  commentTime: Number,
+  time: Date,
 });
 
 module.exports = model('Comment', Comment);
