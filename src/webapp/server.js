@@ -1,4 +1,7 @@
-// const express = require('express');
-const mongoose = require('mongoose');
+const express = require('express');
 
-mongoose.Promise = global.Promise;
+const app = express();
+
+app.get('/', (req, res) => res.send({ hello: 'world' }));
+
+module.exports = app;
