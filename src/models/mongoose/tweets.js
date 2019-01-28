@@ -1,9 +1,9 @@
 const { model, Schema } = require('mongoose');
 
-const tweets = new Schema({
+const Tweets = new Schema({
   username: String,
   tweet: String,
   time: Date,
 });
 
-module.exports = model('tweets', tweets);
+module.exports = model('Tweets', Tweets);
