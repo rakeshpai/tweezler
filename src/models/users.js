@@ -29,16 +29,16 @@ const postTweet = async (username, tweetMsg) => {
   const tweetId = validUser ? await generateTweetId() : null;
   const saveTweet = tweetId ? await Tweets.create({
     username,
-    tweetId,
-    tweetMsg,
-    tweetedTime: new Date(),
+    id: tweetId,
+    message: tweetMsg,
+    time: new Date(),
   }) : null;
   return saveTweet ? tweetId : null;
 };
 
-const checkPostedTweet = async (tweetId) => {
-  const tweet = await Tweets.findOne({ tweetId });
-  return tweet.tweetMsg;
+const checkPostedTweet = async (id) => {
+  const tweet = await Tweets.findOne({ id });
+  return tweet.message;
 };
 
 module.exports.createUser = createUser;
