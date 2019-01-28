@@ -17,6 +17,15 @@ const authenticate = async (username, password) => {
   return compare(password, user.password);
 };
 
+
+const updateProfileDetails = async (username, name) => User.update({ username }, {
+  $set: { name },
+});
+
+const getProfileDetails = async username => User.findOne({ username });
+
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
+module.exports.updateProfileDetails = updateProfileDetails;
+module.exports.getProfileDetails = getProfileDetails;
