@@ -24,7 +24,11 @@ it('should authenticate a user', async () => {
 });
 
 it('Should update profile details', async () => {
-  await updateProfileDetails('myNewTweezlerUserId', 'teezle');
+  const updateValues = {
+    username: 'myNewTweezlerUserId',
+    name: 'teezle',
+  };
+  await updateProfileDetails(updateValues);
 
   const updated = await getProfileDetails('myNewTweezlerUserId');
 

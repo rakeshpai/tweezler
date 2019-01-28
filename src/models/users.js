@@ -20,9 +20,10 @@ const authenticate = async (username, password) => {
 };
 
 
-const updateProfileDetails = async (username, name) => User.update({ username }, {
-  $set: { name },
-});
+const updateProfileDetails = async updateValues => User.update({ username: updateValues.username },
+  {
+    $set: { name: updateValues.name },
+  });
 
 const getProfileDetails = async username => User.findOne({ username },
   {
