@@ -27,7 +27,11 @@ const createComment = async (followerId, tweetId, comment) => Comment.create({
   time: new Date(),
 });
 
+
+const getCommentsForTweets = async tweetId => Comment.find({ tweetId });
+
 module.exports.createComment = createComment;
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
+module.exports.getCommentsForTweets = getCommentsForTweets;

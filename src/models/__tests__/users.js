@@ -1,6 +1,6 @@
 const { open, close, dropDB } = require('../mongoose/_connection');
 const {
-  createUser, userByUsername, authenticate, createComment,
+  createUser, userByUsername, authenticate, createComment, getCommentsForTweets,
 } = require('../users');
 
 beforeAll(open);
@@ -23,7 +23,16 @@ it('should authenticate a user', async () => {
   expect(isValid2).toEqual(false);
 });
 
-it('should create command for a tweet', async () => {
-  const createComments = await createComment('myNewTweezlerUserId', 1, 'hello');
+
+it('should create comment for a tweet', async () => {
+  const sample = {
+    followerId: 'myNewTweezlerUserId',
+    tweetId: 1,
+    comment: 'Hello',
+  };
+  const createComments = await createComment(sample.followerId, sample.tweetId, sample.comment);
   expect(createComments.tweetId).toEqual(1);
+
+  const comments = await getCommentsForTweets(sample.tweetId);
+  expect(comments[0].tweetId).toEqual(sample.tweetId);
 });
