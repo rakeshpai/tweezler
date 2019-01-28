@@ -8,12 +8,12 @@ const saltRounds = 10;
 const encrypt = password => hash(password, saltRounds);
 
 
-const userIdCheck = (userName, followingName) => (!!(userName && followingName));
+// const userIdCheck = (userName, followingName) => (!!(userName && followingName));
 
-const createFollowing = async (userName, followingName) => {
-  const user = userIdCheck(userName, followingName);
-  console.log(user);
-};
+// const createFollowing = async (userName, followingName) => {
+//   const user = userIdCheck(userName, followingName);
+//   console.log(user);
+// };
 
 
 const createUser = async (username, password) => User.create({
@@ -63,4 +63,3 @@ module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
 module.exports.postTweet = postTweet;
 module.exports.checkPostedTweet = checkPostedTweet;
-module.exports.createFollowing = createFollowing;
