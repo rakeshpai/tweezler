@@ -15,7 +15,7 @@
     "lint": "eslint '**/*.js' --fix",
     "pretest": "npm run lint",
     "test": "NODE_ENV=test DB_CONNECTION_STRING=mongodb://localhost/tweezler-test jest",
-    "test:watch": "NODE_ENV=test DB_CONNECTION_STRING=mongodb://localhost/tweezler-test jest --watch"
+    "test:watch": "NODE_ENV=test DB_CONNECTION_STRING=mongodb://localhost/tweezler-test jest --watchAll"
   },
   "keywords": [],
   "author": "",
