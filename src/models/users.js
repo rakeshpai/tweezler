@@ -1,7 +1,6 @@
 const { hash, compare } = require('bcrypt');
 const User = require('./mongoose/users');
 const Tweets = require('./mongoose/tweets');
-const Comment = require('./mongoose/comments');
 
 const saltRounds = 10;
 
@@ -38,20 +37,8 @@ const checkPostedTweet = async (id) => {
   return tweet;
 };
 
-const createComment = async (followerId, tweetId, comment) => Comment.create({
-  followerId,
-  tweetId,
-  comment,
-  time: new Date(),
-});
-
-const getCommentsForTweets = async tweetId => Comment.find({ tweetId });
-
-module.exports.createComment = createComment;
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
 module.exports.postTweet = postTweet;
 module.exports.checkPostedTweet = checkPostedTweet;
-module.exports.getCommentsForTweets = getCommentsForTweets;
-// module.exports.createFollowing = createFollowing;
