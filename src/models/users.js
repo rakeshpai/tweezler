@@ -21,6 +21,7 @@ const createUser = async (username, password) => User.create({
   password: await encrypt(password),
 });
 
+
 const userByUsername = async username => User.findOne({ username });
 
 const authenticate = async (username, password) => {
@@ -57,9 +58,13 @@ const createComment = async (followerId, tweetId, comment) => Comment.create({
   time: new Date(),
 });
 
+const getCommentsForTweets = async tweetId => Comment.find({ tweetId });
+
 module.exports.createComment = createComment;
 module.exports.createUser = createUser;
 module.exports.userByUsername = userByUsername;
 module.exports.authenticate = authenticate;
 module.exports.postTweet = postTweet;
 module.exports.checkPostedTweet = checkPostedTweet;
+module.exports.getCommentsForTweets = getCommentsForTweets;
+// module.exports.createFollowing = createFollowing;
